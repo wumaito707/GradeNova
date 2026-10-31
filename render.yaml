@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: gradenova
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 24
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gradenova-db
+          property: connectionString
+databases:
+  - name: gradenova-db
+    plan: free
+    databaseName: gradenova
+    user: gradenova
+    ipAllowList: []

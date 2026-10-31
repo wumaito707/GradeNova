@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101112">
+  <meta name="description" content="GradeNova helps students calculate GPA, track CGPA, and plan their next academic milestone.">
+  <title>GradeNova — Your academic journey, in focus</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23131416'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia' font-size='40' font-weight='bold' fill='%23e8bd64'%3EG%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="logic.js" defer></script>
+  <script src="account.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <section id="auth-screen" class="auth-screen" aria-labelledby="auth-title">
+    <form id="auth-form" class="auth-card">
+      <div class="eyebrow">GRADENOVA · STUDENT WORKSPACE</div>
+      <h1 id="auth-title">Your progress.<br><em>Always with you.</em></h1>
+      <p>Sign in to keep your semesters and grades in your account, across devices.</p>
+      <div class="auth-tabs"><button id="login-tab" type="button" class="button button-gold">Sign in</button><button id="register-tab" type="button" class="button button-secondary">Create account</button></div>
+      <label id="auth-name-label" hidden>Your name<input id="auth-name" class="form-control" maxlength="35" autocomplete="given-name"></label>
+      <label>Email<input id="auth-email" class="form-control" type="email" autocomplete="username" maxlength="254" required></label>
+      <label>Password<input id="auth-password" class="form-control" type="password" autocomplete="current-password" minlength="12" maxlength="128" required></label>
+      <small>Use 12–128 characters. Keep your password safe; email recovery is not available yet.</small>
+      <p id="auth-message" role="status">Connecting to your workspace…</p>
+      <button id="auth-submit" class="button button-gold" type="submit" disabled>Sign in</button>
+    </form>
+  </section>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a href="#overview" class="brand" aria-label="GradeNova home">
+        <span class="brand-mark">G<span class="brand-orbit"></span></span>
+        <span><strong>GradeNova</strong><small>STUDENT WORKSPACE</small></span>
+      </a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="navigation">
+        <button class="nav-link active" type="button" data-go="overview"><span class="nav-icon">▦</span> Overview <span class="nav-indicator"></span></button>
+        <button class="nav-link" type="button" data-go="calculator"><span class="nav-icon">▤</span> GPA Calculator <span class="nav-indicator"></span></button>
+        <button class="nav-link" type="button" data-go="history"><span class="nav-icon">◷</span> Semester History <span class="nav-indicator"></span></button>
+        <button class="nav-link" type="button" data-go="planner"><span class="nav-icon">◎</span> Target Planner <span class="nav-indicator"></span></button>
+      </nav>
+      <div class="sidebar-label tools-label">PREFERENCES</div>
+      <nav class="navigation">
+        <button class="nav-link" type="button" data-go="settings"><span class="nav-icon">⚙</span> Settings <span class="nav-indicator"></span></button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-bottom">
+        <div class="side-deco"><span class="side-star">✧</span><strong>Small steps.<br>Great results.</strong><p>Every grade tells a part of your story.</p></div>
+        <div class="side-profile"><div class="avatar">ST</div><div><strong id="side-name">Student</strong><small>Academic workspace</small></div><span class="online-dot"></span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="crumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="page-crumb">Overview</strong></div>
+        <div class="top-actions">
+          <span class="saved-status" id="saved-status" role="status">Loading your account…</span>
+          <button class="text-button" id="save-now" type="button">Save now</button>
+          <button class="text-button" id="sign-out" type="button">Sign out</button>
+          <button class="icon-button" id="print-button" type="button" title="Print or save report as PDF" aria-label="Print report">↧</button>
+          <button class="top-avatar" id="profile-button" type="button" data-go="settings" aria-label="Open profile settings">ST</button>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <section id="view-overview" class="view active-view" aria-labelledby="overview-title">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR ACADEMIC COMMAND CENTER</div>
+          <div class="section-heading"><div><h1 id="overview-title">Welcome back, <span id="welcome-name">Student</span><span class="wave"> ✦</span></h1><p>Your progress, your potential. Let's see how far you've come.</p></div><button class="button button-secondary" type="button" id="export-report">↧ Export records</button></div>
+
+          <div class="hero">
+            <div class="hero-copy"><span class="hero-kicker"><span class="hero-pulse"></span> ACADEMIC OVERVIEW</span><h2>Make every<br><em>grade</em> count.</h2><p>A clearer picture of your results, and a smarter path to your next milestone.</p><button class="button button-gold" type="button" data-go="calculator">Calculate your GPA <span>↗</span></button></div>
+            <div class="hero-visual"><div class="hero-grid"></div><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="hero-center"><span>CURRENT CGPA</span><strong id="hero-cgpa">—</strong><small id="hero-scale">OUT OF 5.00</small></div><span class="spark spark-1">✦</span><span class="spark spark-2">✧</span></div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Overall CGPA</span><span class="stat-icon gold">◎</span></div><strong id="stat-cgpa">—</strong><div class="stat-foot"><span class="stat-chip" id="classification-chip">No grades yet</span><span id="scale-foot">5-point scale</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Graded credits</span><span class="stat-icon blue">◈</span></div><strong id="stat-units">0<span class="stat-suffix"> units</span></strong><div class="stat-foot"><span>Across all semesters</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Courses recorded</span><span class="stat-icon violet">▣</span></div><strong id="stat-courses">0</strong><div class="stat-foot"><span>Your course portfolio</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Semesters</span><span class="stat-icon green">◷</span></div><strong id="stat-semesters">0</strong><div class="stat-foot"><span>Academic terms tracked</span></div></article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="panel performance-panel"><div class="panel-heading"><div><span class="tiny-overline">YOUR TRAJECTORY</span><h3>Semester performance</h3><p>GPA trends across your academic journey</p></div><span class="panel-tag">GPA trend</span></div><div class="chart-area" id="gpa-chart"></div><div class="chart-legend"><span class="legend-gold"></span> Semester GPA <span class="legend-muted">/ your selected scale</span></div></article>
+            <article class="panel recent-panel"><div class="panel-heading"><div><span class="tiny-overline">AT A GLANCE</span><h3>Recent semesters</h3><p>Your latest academic entries</p></div><button class="text-button" type="button" data-go="history">View all ↗</button></div><div id="recent-semesters" class="recent-list"></div><button class="outline-full" type="button" id="new-semester-overview">+ Add a semester</button></article>
+          </div>
+        </section>
+
+        <section id="view-calculator" class="view" aria-labelledby="calculator-title">
+          <div class="eyebrow"><span class="eyebrow-line"></span> GPA CALCULATOR</div>
+          <div class="section-heading"><div><h1 id="calculator-title">Calculate with <em>confidence.</em></h1><p>Add your courses and see your GPA update instantly.</p></div><button class="button button-secondary" type="button" id="add-semester-calculator">+ New semester</button></div>
+          <div class="panel calculator-panel">
+            <div class="calculator-toolbar"><div class="field-block"><label for="semester-select">CURRENT SEMESTER</label><select id="semester-select" class="form-control"></select></div><div class="field-block"><label for="semester-name">SEMESTER NAME</label><input id="semester-name" class="form-control" type="text" maxlength="70" placeholder="e.g. 100 Level • First Semester"></div><div class="field-block small-field"><label for="calculator-scale">GRADING SCALE</label><select id="calculator-scale" class="form-control"><option value="5">5-point scale</option><option value="4">4-point scale</option></select></div></div>
+            <div class="table-wrap"><table class="course-table"><thead><tr><th>COURSE CODE</th><th>COURSE TITLE <span class="optional">(OPTIONAL)</span></th><th>UNITS</th><th>GRADE</th><th>POINTS</th><th><span class="sr-only">Remove</span></th></tr></thead><tbody id="courses-body"></tbody></table></div>
+            <div class="calculator-footer"><button class="add-course" id="add-course" type="button"><span>+</span> Add course</button><div class="calc-totals"><div><small>Total units</small><strong id="term-units">0</strong></div><div><small>Quality points</small><strong id="term-points">0</strong></div><div class="gpa-total"><small>Semester GPA</small><strong id="term-gpa">—</strong></div></div></div>
+          </div>
+          <div class="hint-card"><span class="hint-icon">✧</span><div><strong>Changes save to your account automatically</strong><p>Grades are weighted by credit units. Empty or incomplete rows are not included in calculations. Check the save status before closing the page.</p></div></div>
+        </section>
+
+        <section id="view-history" class="view" aria-labelledby="history-title">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR ACADEMIC RECORD</div>
+          <div class="section-heading"><div><h1 id="history-title">Semester <em>history.</em></h1><p>A complete timeline of your progress, one semester at a time.</p></div><button class="button button-gold" type="button" id="add-semester-history">+ Add semester</button></div>
+          <div class="history-summary" id="history-summary"></div>
+          <div class="history-list" id="history-list"></div>
+        </section>
+
+        <section id="view-planner" class="view" aria-labelledby="planner-title">
+          <div class="eyebrow"><span class="eyebrow-line"></span> LOOK AHEAD</div>
+          <div class="section-heading"><div><h1 id="planner-title">Plan your <em>next move.</em></h1><p>Find the average GPA needed to reach your target cumulative GPA.</p></div></div>
+          <div class="planner-grid"><article class="panel planner-controls"><div class="panel-heading"><div><span class="tiny-overline">YOUR GOAL</span><h3>Target CGPA planner</h3><p>Model your next semester</p></div><span class="panel-tag">What if?</span></div><div class="planner-field"><label for="target-cgpa">Desired CGPA</label><div class="input-with-unit"><input id="target-cgpa" type="number" step="0.01" min="0" max="5" value="4.00" class="form-control"><span id="planner-out-of">/ 5.00</span></div></div><div class="planner-field"><label for="next-units">Next semester credit units</label><div class="input-with-unit"><input id="next-units" type="number" step="1" min="1" max="100" value="20" class="form-control"><span>units</span></div></div><div class="goal-note">✦ Your target is compared with your current CGPA and completed units. It assumes all upcoming units receive grades.</div></article><article class="planner-result"><span class="hero-kicker">YOUR ROADMAP</span><div class="planner-ring" id="planner-ring"><span>REQUIRED GPA<strong id="required-gpa">—</strong><small id="required-of">out of 5.00</small></span></div><div id="planner-status" class="planner-status">Add graded courses to see your personalized target.</div><div class="planner-math" id="planner-math"></div></article></div>
+          <div class="panel grade-guide"><div class="panel-heading"><div><span class="tiny-overline">QUICK REFERENCE</span><h3>Understanding grade points</h3><p>Each grade contributes points weighted by its course units</p></div></div><div class="grade-badges" id="grade-guide"></div><p class="disclaimer">Grade scales and degree classifications differ by institution. GradeNova uses common illustrative mappings; always verify your university's official policy.</p></div>
+        </section>
+
+        <section id="view-settings" class="view" aria-labelledby="settings-title">
+          <div class="eyebrow"><span class="eyebrow-line"></span> PERSONALIZE YOUR SPACE</div>
+          <div class="section-heading"><div><h1 id="settings-title">Workspace <em>settings.</em></h1><p>Make GradeNova feel like your own academic home.</p></div></div>
+          <div class="settings-grid"><article class="panel settings-panel"><div class="panel-heading"><div><span class="tiny-overline">PROFILE</span><h3>About you</h3></div></div><div class="planner-field"><label for="student-name">Your first name</label><input id="student-name" class="form-control" maxlength="35" placeholder="Student"></div><div class="planner-field"><label for="institution-name">Institution</label><input id="institution-name" class="form-control" maxlength="90" placeholder="Your university"></div><div class="planner-field"><label for="settings-scale">Grading scale</label><select id="settings-scale" class="form-control"><option value="5">5-point (A=5, B=4, C=3, D=2, E=1, F=0)</option><option value="4">4-point (A=4, B=3, C=2, D=1, F=0)</option></select></div><p class="settings-caption">Changing the scale recalculates your recorded grades. It does not erase your courses.</p></article><article class="panel settings-panel"><div class="panel-heading"><div><span class="tiny-overline">BACKUP & DATA</span><h3>Keep your records safe</h3></div></div><button class="settings-action" id="export-json" type="button"><span>↧</span><span><strong>Download backup</strong><small>Save all your courses as a JSON file</small></span><span>↗</span></button><label class="settings-action" for="import-file" role="button" tabindex="0"><span>↥</span><span><strong>Restore backup</strong><small>Load an exported GradeNova file</small></span><span>↗</span></label><input class="hidden-file" type="file" id="import-file" accept="application/json,.json"><button class="settings-action" id="load-demo" type="button"><span>✧</span><span><strong>Try sample data</strong><small>Explore how GradeNova works</small></span><span>↗</span></button><button class="settings-action danger" id="reset-all" type="button"><span>⌫</span><span><strong>Clear all records</strong><small>Start again with a blank workspace</small></span><span>↗</span></button></article></div>
+        </section>
+
+      </div>
+      <footer class="footer"><span>© <span id="footer-year">2026</span> GradeNova. Made for ambitious minds.</span><span>Powered by <strong>Wumaito Gold Web Solutions</strong></span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div class="print-report" id="print-report"></div>
+</body>
+</html>
