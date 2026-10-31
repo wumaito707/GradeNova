@@ -14,6 +14,8 @@ Tables are created automatically at startup. Do not open `index.html` directly: 
 
 ## Deploy to Render
 
+[Deploy this repository to Render](https://render.com/deploy?repo=https://github.com/wumaito707/GradeNova)
+
 Use **New → Blueprint** in Render and connect this GitHub repository. `render.yaml` creates a Node web service and a PostgreSQL database and connects them with `DATABASE_URL`. Build command: `npm ci --omit=dev`. Start command: `npm start`. Health check: `/health`. Render supplies the public origin through `RENDER_EXTERNAL_URL`; for a custom domain set `APP_ORIGIN` to its exact HTTPS origin (no trailing slash).
 
 The supplied Blueprint selects free plans for a capstone/demo. Render free web services sleep after inactivity, and free PostgreSQL databases expire after 30 days. Export records and upgrade the database if using it beyond the demonstration period. No paid resources are provisioned by the configuration. See https://render.com/docs/free.
