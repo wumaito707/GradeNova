@@ -23,8 +23,9 @@ test('browser: register, edit, autosave, reload, plan and sign out',{skip:!proce
     await page.locator('#target-cgpa').fill('4.5');await page.locator('#next-units').fill('20');assert.match(await page.locator('#planner-status').innerText(),/Aim for at least/);
     await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
+    await page.waitForFunction(()=>[...document.querySelectorAll('.nav-link')].every(n=>n.getBoundingClientRect().bottom<=window.innerHeight));
     const nav=await page.locator('.nav-link').evaluateAll(nodes=>nodes.map(n=>({x:n.getBoundingClientRect().x,y:n.getBoundingClientRect().y,bottom:n.getBoundingClientRect().bottom})));
-    assert.ok(nav.every(n=>Math.abs(n.y-nav[0].y)<2&&n.bottom<=844));
+    assert.ok(nav.every(n=>Math.abs(n.y-nav[0].y)<2&&n.bottom<=844),JSON.stringify(nav));
     assert.ok(nav.every((n,i)=>i===0||n.x>nav[i-1].x));
     if(process.env.UI_SCREENSHOT)await page.screenshot({path:process.env.UI_SCREENSHOT,fullPage:true});
     await page.locator('#sign-out').click();await page.locator('#auth-screen').waitFor({state:'visible'});await page.waitForFunction(()=>!document.getElementById('auth-submit').disabled);
